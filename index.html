@@ -7,7 +7,7 @@
 <body>
     <h1>Good morning </h1>
     <p>Use these links to navigate to your favourite ETH resources, or enter shortcode.ethz.fyi with the provided shortcodes in brackets</p>
-    <p><button id="toggleStylesheet">Toggle CSS</button></p>
+    <p><button id="toggleStylesheet">Add CSS</button></p>
     <ul>
         <li><a href="https://m.ethz.fyi">Moodle</a> (m, moodle)</li>
         <li><a href="https://ce.ethz.fyi">Code Expert</a> (ce, codeexpert)</li>
@@ -39,7 +39,7 @@
             document.head.appendChild(link);
             localStorage.setItem('stylesheetLoaded', 'true');
             stylesheetLoaded = true;
-            button.textContent = 'Remove Stylesheet';
+            button.textContent = 'Remove CSS';
         }
 
         function removeStylesheet() {
@@ -49,7 +49,7 @@
             }
             localStorage.setItem('stylesheetLoaded', 'false');
             stylesheetLoaded = false;
-            button.textContent = 'Load Stylesheet';
+            button.textContent = 'Add CSS';
         }
 
         function toggleStylesheet() {
