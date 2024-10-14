@@ -7,6 +7,7 @@
 <body>
     <h1>Good morning </h1>
     <p>Use these links to navigate to your favourite ETH resources, or enter shortcode.ethz.fyi with the provided shortcodes in brackets</p>
+    <p><button id="loadStylesheet">Add CSS</button></p>
     <ul>
         <li><a href="https://m.ethz.fyi">Moodle</a> (m, moodle)</li>
         <li><a href="https://ce.ethz.fyi">Code Expert</a> (ce, codeexpert)</li>
@@ -24,5 +25,14 @@
         <input name="q" placeholder="search query" />
         <button type="submit">Search</button>
     </form>
+
+    <script>
+        document.getElementById('loadStylesheet').addEventListener('click', function() {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css';
+            document.head.appendChild(link);
+        });
+    </script>
 </body>
 </html>
