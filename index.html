@@ -7,7 +7,7 @@
 <body>
     <h1>Good morning </h1>
     <p>Use these links to navigate to your favourite ETH resources, or enter shortcode.ethz.fyi with the provided shortcodes in brackets</p>
-    <p><button id="loadStylesheet">Add CSS</button></p>
+    <p><button id="toggleStylesheet">Toggle CSS</button></p>
     <ul>
         <li><a href="https://m.ethz.fyi">Moodle</a> (m, moodle)</li>
         <li><a href="https://ce.ethz.fyi">Code Expert</a> (ce, codeexpert)</li>
@@ -27,12 +27,45 @@
     </form>
 
     <script>
-        document.getElementById('loadStylesheet').addEventListener('click', function() {
-            var link = document.createElement('link');
+        const stylesheetUrl = 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css';
+        const button = document.getElementById('toggleStylesheet');
+        let stylesheetLoaded = false;
+
+        function loadStylesheet() {
+            const link = document.createElement('link');
             link.rel = 'stylesheet';
-            link.href = 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css';
+            link.href = stylesheetUrl;
+            link.id = 'dynamicStylesheet';
             document.head.appendChild(link);
-        });
+            localStorage.setItem('stylesheetLoaded', 'true');
+            stylesheetLoaded = true;
+            button.textContent = 'Remove Stylesheet';
+        }
+
+        function removeStylesheet() {
+            const link = document.getElementById('dynamicStylesheet');
+            if (link) {
+                link.remove();
+            }
+            localStorage.setItem('stylesheetLoaded', 'false');
+            stylesheetLoaded = false;
+            button.textContent = 'Load Stylesheet';
+        }
+
+        function toggleStylesheet() {
+            if (stylesheetLoaded) {
+                removeStylesheet();
+            } else {
+                loadStylesheet();
+            }
+        }
+
+        // Check localStorage on page load
+        if (localStorage.getItem('stylesheetLoaded') === 'true') {
+            loadStylesheet();
+        }
+
+        button.addEventListener('click', toggleStylesheet);
     </script>
 </body>
 </html>
