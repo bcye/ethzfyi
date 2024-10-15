@@ -8,7 +8,7 @@
     <h1>Good morning </h1>
     <p>Use these links to navigate to your favourite ETH resources, or enter shortcode.ethz.fyi with the provided shortcodes in brackets</p>
     <p><button id="toggleStylesheet">Add CSS</button></p>
-    <ul>
+    <ol start="0">
         <li><a href="https://m.ethz.fyi">Moodle</a> (m, moodle)</li>
         <li><a href="https://ce.ethz.fyi">Code Expert</a> (ce, codeexpert)</li>
         <li><a href="https://f.ethz.fyi">Mensa Menu (Platte 14, what else)</a> (f, food)</li>
@@ -16,7 +16,8 @@
         <li><a href="https://edu.ethz.fyi">Online Edu App</a> (edu)</li>
         <li><a href="https://my.ethz.fyi">MyStudies</a> (my)</li>
         <li><a href="https://edit.ethz.fyi">Edit this page (:</a> (edit)</li>
-    </ul>
+    </ol>
+    <p>Hint: Press the appropriate number on your keyboard to be redirected immediately</p>
     <h2>
         ETH PDF Search
     </h2>
@@ -35,6 +36,19 @@
     </form>
 
     <script>
+        // MARK: - HOTKEYS
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            if (key >= '0' && key <= '9') {
+                const index = parseInt(key);
+                const links = document.querySelectorAll('ol li a');
+                if (links[index]) {
+                    window.location.href = links[index].href;
+                }
+            }
+        });
+                
+        // MARK: - STYLES
         const stylesheetUrl = 'https://cdn.jsdelivr.net/npm/water.css@2/out/water.css';
         const button = document.getElementById('toggleStylesheet');
         let stylesheetLoaded = false;
