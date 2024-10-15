@@ -17,13 +17,13 @@
         <li><a href="https://my.ethz.fyi">MyStudies</a> (my)</li>
         <li><a href="https://edit.ethz.fyi">Edit this page (:</a> (edit)</li>
     </ol>
-    <p>Hint: Press the appropriate number on your keyboard to be redirected immediately</p>
+    <p>Hint: Press the appropriate number on your keyboard to be redirected immediately. You may also use k/p to focus one of the search fields</p>
     <h2>
         ETH PDF Search
     </h2>
     <p>Search directly from here, or see <a href="https://search.ethz.fyi">search.ethz.fyi</a> (search, s) for more information on this project or how to add it as a search engine.</p>
     <form method="get" action="https://search.ethz.fyi">
-        <input name="q" placeholder="ex.: subset sum cadmo" />
+        <input id="p" name="q" placeholder="ex.: subset sum cadmo" />
         <button type="submit">Search</button>
     </form>
 
@@ -31,7 +31,7 @@
         Kagi Search
     </h2>
     <form method="get" action="https://kagi.com/search">
-        <input name="q" placeholder="search" />
+        <input id="k" name="q" placeholder="search" />
         <button type="submit">Search</button>
     </form>
 
@@ -45,6 +45,8 @@
                 if (links[index]) {
                     window.location.href = links[index].href;
                 }
+            } else {
+                document.getElementById(key).focus();
             }
         });
                 
