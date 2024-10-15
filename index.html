@@ -46,7 +46,7 @@
                     window.location.href = links[index].href;
                 }
             } else {
-                document.getElementById(key).focus();
+                document.getElementById(key).target.focus();
                 event.stopPropagation();
             }
         });
