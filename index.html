@@ -39,6 +39,8 @@
     <script>
         // MARK: - HOTKEYS
         document.addEventListener('keydown', function(event) {
+            if (event.target.matches("input")) return;
+            
             const key = event.key;
             if (key >= '0' && key <= '9') {
                 const index = parseInt(key);
