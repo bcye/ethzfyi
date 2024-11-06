@@ -93,6 +93,94 @@
         }
 
         button.addEventListener('click', toggleStylesheet);
+
+        // MARK: - Shake Detection to Moodle
+        class ShakeDetector {
+            constructor(options = {}) {
+                this.threshold = options.threshold || 15; // Shake sensitivity
+                this.timeout = options.timeout || 1000;  // Minimum time between shakes
+                this.redirectUrl = options.redirectUrl || 'https://example.com';
+                
+                this.lastTime = new Date();
+                this.lastX = null;
+                this.lastY = null;
+                this.lastZ = null;
+                
+                this.initialize();
+            }
+            
+            initialize() {
+                // Check if DeviceMotion is supported
+                if (typeof DeviceMotionEvent === 'undefined') {
+                    console.error('DeviceMotion not supported');
+                    return;
+                }
+                
+                // Request permission for iOS 13+ devices
+                if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                    DeviceMotionEvent.requestPermission()
+                        .then(response => {
+                            if (response === 'granted') {
+                                this.attachShakeEvent();
+                            }
+                        })
+                        .catch(console.error);
+                } else {
+                    this.attachShakeEvent();
+                }
+            }
+            
+            attachShakeEvent() {
+                window.addEventListener('devicemotion', (event) => this.handleMotion(event), true);
+            }
+            
+            handleMotion(event) {
+                const current = new Date();
+                const timeDifference = current.getTime() - this.lastTime.getTime();
+                
+                if (timeDifference > this.timeout) {
+                    const acceleration = event.accelerationIncludingGravity;
+                    if (!acceleration || !acceleration.x) return;
+                    
+                    const { x, y, z } = acceleration;
+                    
+                    if (this.lastX === null) {
+                        this.lastX = x;
+                        this.lastY = y;
+                        this.lastZ = z;
+                        return;
+                    }
+                    
+                    // Calculate the change in X acceleration
+                    const deltaX = this.lastX - x;
+                    
+                    // Check if movement exceeds threshold, is primarily horizontal,
+                    // and is specifically a left movement (positive deltaX)
+                    if (deltaX > this.threshold && 
+                        Math.abs(deltaX) > Math.abs(this.lastY - y) && 
+                        Math.abs(deltaX) > Math.abs(this.lastZ - z)) {
+                        this.onLeftTug();
+                        this.lastTime = current;
+                    }
+                    
+                    this.lastX = x;
+                    this.lastY = y;
+                    this.lastZ = z;
+                }
+            }
+            
+            onLeftTug() {
+                console.log('Left tug detected! Redirecting...');
+                window.location.href = this.redirectUrl;
+            }
+        }
+        
+        // Initialize the detector
+        const shakeDetector = new ShakeDetector({
+            threshold: 15,           // Adjust sensitivity (lower = more sensitive)
+            timeout: 1000,          // Minimum ms between tugs
+            redirectUrl: 'https://m.ethz.fyi'  // Your redirect URL
+        });
     </script>
 </body>
 </html>
