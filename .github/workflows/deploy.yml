@@ -12,6 +12,6 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2
 
-      - run: bunx bunnyup deploy -y
+      - run: bunx bunnyup deploy
         env:
           BUNNY_API_KEY: ${{ secrets.BUNNY_API_KEY }}
