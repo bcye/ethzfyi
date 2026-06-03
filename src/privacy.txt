@@ -1,0 +1,3 @@
+No personal data is collected.
+
+The app or website may communicate with servers hosted by bunny.net, in this case, the server is configured to anonymise IP addresses to not be considered identifiable information.
